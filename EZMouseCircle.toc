@@ -1,0 +1,15 @@
+## Interface: 120001
+## Title: EZ Mouse Circle
+## Category: Interface Enhancements
+## IconTexture: Interface\Icons\Ability_Rogue_Shadowstrikes
+## SavedVariables: EZMouseCircleDB
+## Notes: 
+## Author: Pharmac1st
+## Version: @project-version@
+## X-Curse-Project-ID: 
+
+Embeds.xml
+
+EZMouseCircle.lua
+
+Options/Options.xml
