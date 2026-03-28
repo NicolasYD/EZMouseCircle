@@ -39,6 +39,61 @@ function EZMouseCircle:GetOptions()
                             },
                         },
                     },
+
+                    mouseCircle = {
+                        type = "group",
+                        name = "Mouse Circle",
+                        inline = true,
+                        order = 20,
+                        args = {
+                            color = {
+                                type = "color",
+                                name = "Color",
+                                desc = "Pick the color of the mouse circle",
+                                hasAlpha = true,
+                                order = 10,
+                                get = function(_)
+                                    local color = EZMouseCircle.db.profile.general.mouseCircle.color
+                                    return color.r, color.g, color.b, color.a
+                                end,
+                                set = function(_, r, g, b, a)
+                                    local color = EZMouseCircle.db.profile.general.mouseCircle.color
+                                    color.r, color.g, color.b, color.a = r, g, b, a
+
+                                    EZMouseCircle:StyleMouseTexture()
+                                end,
+                            },
+                            separator1 = {
+                                type = "description",
+                                name = "",
+                                width = "full",
+                                order = 11
+                            },
+                            size = {
+                                type = "range",
+                                name = "Size",
+                                desc = "Change the size of the mouse circle.",
+                                min = 0,
+                                max = 200,
+                                step = 1,
+                                order = 20,
+                                get = function(_)
+                                    return settings.general.mouseCircle.size
+                                end,
+                                set = function(_, value)
+                                    settings.general.mouseCircle.size = value
+
+                                    EZMouseCircle:StyleMouseTexture()
+                                end,
+                            },
+                            separator2 = {
+                                type = "description",
+                                name = "",
+                                width = "full",
+                                order = 21
+                            },
+                        },
+                    },
                 },
             },
         },

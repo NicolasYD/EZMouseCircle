@@ -18,12 +18,12 @@ NS.addon = EZMouseCircle
 EZMouseCircle.LDBIcon = LDBIcon
 
 -- Localize WoW API functions
-
+local GetCursorPosition = GetCursorPosition
 
 -- Minimap button
 local minimapDataObject = LDB:NewDataObject("EZMouseCircle", {
     type = "launcher",
-    icon = "Interface\\Icons\\Ability_Rogue_Shadowstrikes",
+    icon = "Interface\\Icons\\Ability_marksmanship",
     OnClick = function(_, button)
         if button == "LeftButton" then
             EZMouseCircle:OpenOptions()
@@ -45,6 +45,13 @@ function EZMouseCircle:OnInitialize()
                         minimapPos = 45,
                     },
                 },
+                mouseCircle = {
+                    strata = "TOOLTIP",
+                    size = 32,
+                    texture = "Interface\\AddOns\\EZMouseCircle\\Textures\\circle.tga",
+                    color = {r = 1, g = 1, b = 1, a = 1},
+                    alpha = 1,
+                },
             },
         },
     }, true)
@@ -55,6 +62,8 @@ end
 
 function EZMouseCircle:OnEnable()
     self:RegisterOptions()
+
+    self:CreateMouseTexture()
 end
 
 function EZMouseCircle:OnDisable()
@@ -83,4 +92,47 @@ function EZMouseCircle:OpenOptions()
         local frame = ACD.OpenFrames["EZMouseCircle"]
         frame.frame:SetClampedToScreen(true)
     end
+end
+
+function EZMouseCircle:CreateMouseTexture()
+
+    if EZMouseCircle.frame then return end
+
+    local scale = UIParent:GetEffectiveScale()
+
+    local frame = CreateFrame("Frame", nil, UIParent)
+
+    frame:RegisterEvent("UI_SCALE_CHANGED")
+    frame:SetScript("OnEvent", function()
+        print("UI_SCALE_CHANGED")
+        scale = UIParent:GetEffectiveScale()
+    end)
+
+    frame:SetScript("OnUpdate", function(f)
+        local x, y = GetCursorPosition()
+
+        f:ClearAllPoints()
+        f:SetPoint("CENTER", UIParent, "BOTTOMLEFT", (x / scale), (y / scale))
+    end)
+
+    local texture = frame:CreateTexture(nil, "OVERLAY")
+    texture:SetAllPoints()
+    frame.texture = texture
+
+    EZMouseCircle.frame = frame
+
+    self:StyleMouseTexture()
+end
+
+function EZMouseCircle:StyleMouseTexture()
+    local settings = self.db.profile.general.mouseCircle
+
+    local frame = EZMouseCircle.frame
+
+    frame:SetFrameStrata(settings.strata)
+    frame:SetSize(settings.size, settings.size)
+
+    frame.texture:SetTexture(settings.texture)
+    frame.texture:SetVertexColor(settings.color.r, settings.color.g, settings.color.b, settings.color.a)
+    frame.texture:SetAlpha(settings.alpha)
 end
