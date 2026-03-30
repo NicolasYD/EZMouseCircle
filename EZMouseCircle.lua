@@ -48,7 +48,7 @@ function EZMouseCircle:OnInitialize()
                 mouseCircle = {
                     strata = "TOOLTIP",
                     size = 32,
-                    texture = "Interface\\AddOns\\EZMouseCircle\\Textures\\circle.tga",
+                    texture = "Interface\\AddOns\\EZMouseCircle\\Textures\\CircleAndDot.tga",
                     color = {r = 1, g = 1, b = 1, a = 1},
                     alpha = 1,
                 },
