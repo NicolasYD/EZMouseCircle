@@ -23,7 +23,7 @@ local GetCursorPosition = GetCursorPosition
 -- Minimap button
 local minimapDataObject = LDB:NewDataObject("EZMouseCircle", {
     type = "launcher",
-    icon = "Interface\\Icons\\Ability_marksmanship",
+    icon = "Interface\\Icons\\Inv_ability_skyriding_glyph",
     OnClick = function(_, button)
         if button == "LeftButton" then
             EZMouseCircle:OpenOptions()
